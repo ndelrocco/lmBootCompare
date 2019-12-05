@@ -18,6 +18,10 @@ Generate random deviates from Mammen's continuous distribution (Description)
 \details{
 This function generates random numbers from Mammen's continuous distribution.
 }
+\examples{
+rMammenC(1)
+
+}
 \references{
 Davison, A.C. and Hinkley, D.V. (1997) Bootstrap Methods and Their Application. Cambridge University Press.
 

@@ -21,6 +21,15 @@
 ##' @value A list with each component containing a 6 x (k+1) matrix of summary statistics. Each component
 ##' contains an elected summary statistic. Summary statistics are calculated for each covariate and each
 ##' bootstrap method.
+##' @examples
+##' library(faraway)
+##' data(prostate)
+##' lmod <- lm(lpsa ~ lcavol + age + lweight, prostate)
+##' bootsamps <- bootstrapSamples(lmodObs=lmod, formula='lpsa ~ lcavol + age + lweight',
+##'                               data=prostate, B=1000)
+##' bootstrapSummary(bootList = bootsamps, lmodObs = lmod,
+##'                  summaryStats = c('median', 'var', 'se', 'IQR'))
+##'
 ##' @author Natalie DelRocco
 
 #' @export

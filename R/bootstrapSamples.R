@@ -19,6 +19,13 @@
 ##' @value A list of length six where each component is a B x (k+1) data frame containing B samples from the
 ##' distributions of each of the (k+1) model parameters, where k is the number of predictors in the
 ##' model. Each component in the list corresponds to one of six bootstrapping methods.
+##' @examples
+##' library(faraway)
+##' data(prostate)
+##' lmod <- lm(lpsa ~ lcavol + age + lweight, prostate)
+##' bootsamps <- bootstrapSamples(lmodObs=lmod, formula='lpsa ~ lcavol + age + lweight',
+##'                               data=prostate, B=1000)
+##'
 ##' @author Natalie DelRocco
 
 #' @export

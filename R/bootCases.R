@@ -13,6 +13,11 @@
 ##' @param B The number of bootstrap replicates. Usually this will be a single positive integer.
 ##' @return A B x (k+1) data frame containing B samples from the distributions of each of the (k+1) model
 ##' parameters, where k is the number of predictors in the model.
+##' @examples
+##' library(faraway)
+##' data(prostate)
+##' bootsamps <- bootCases(formula='lpsa ~ lcavol + age + lweight', data=prostate, B=1000)
+##'
 ##' @author Natalie DelRocco
 ##' @references Davison, A.C. and Hinkley, D.V. (1997) Bootstrap Methods and Their Application. Cambridge University Press.
 

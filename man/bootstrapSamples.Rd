@@ -29,6 +29,14 @@ Wild bootstrap with Mammen's Two-Point Distribution, Wild bootstrap with Mammen'
 Distribution, Wild boostrap with Rademacher Distribution, and Wild bootstrap with Standard Normal
 Distribution.
 }
+\examples{
+library(faraway)
+data(prostate)
+lmod <- lm(lpsa ~ lcavol + age + lweight, prostate)
+bootsamps <- bootstrapSamples(lmodObs=lmod, formula='lpsa ~ lcavol + age + lweight',
+                              data=prostate, B=1000)
+
+}
 \author{
 Natalie DelRocco
 }

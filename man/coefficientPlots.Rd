@@ -27,6 +27,15 @@ Distribution, Wild boostrap with Rademacher Distribution, and Wild bootstrap wit
 Distribution. Each plot contains (k+1) facets where k is the number of predictors in the model. The
 least squares estimate of each regression coefficient is denoted with a red dashed line.
 }
+\examples{
+library(faraway)
+data(prostate)
+lmod <- lm(lpsa ~ lcavol + age + lweight, prostate)
+bootsamps <- bootstrapSamples(lmodObs=lmod, formula='lpsa ~ lcavol + age + lweight',
+                              data=prostate, B=1000)
+coefficientPlots(lmodObs=lmod, bootList=bootsamps)
+
+}
 \author{
 Natalie DelRocco
 }

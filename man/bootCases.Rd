@@ -27,6 +27,12 @@ This function simulates the sampling distribution of simple linear regression co
 by first simulating the joint distribution of (\eqn{\mathbf{X},Y}) by the empirical distribution
 function of the cases (i.e. resampling cases with replacement).
 }
+\examples{
+library(faraway)
+data(prostate)
+bootsamps <- bootCases(formula='lpsa ~ lcavol + age + lweight', data=prostate, B=1000)
+
+}
 \references{
 Davison, A.C. and Hinkley, D.V. (1997) Bootstrap Methods and Their Application. Cambridge University Press.
 }

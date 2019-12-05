@@ -19,7 +19,7 @@ class inheriting from 'lm'.}
 \item{B}{The number of bootstrap replicates. Usually this will be a single positive integer.}
 
 \item{multiplier}{A string indicating which multiplier to use as the auxiliary distribution. Options
-are 'mammen2', 'mammenC', 'rademacher', and 'norm'}
+are 'Mammen2', 'MammenC', 'Rademacher', and 'norm'}
 }
 \value{
 A B x (k+1) data frame containing B samples from the distributions of each of the (k+1) model
@@ -35,6 +35,14 @@ and using a zero mean, unit variance auxiliary multiplier variable on the \eqn{i
 There are several common multipliers used for Wild bootstrap. The four multipliers supported by
 this function are: Mammen's two-point distribution, Mammen's continuous distribution, Rademacher
 distribution, and the Standard Normal distribution.
+}
+\examples{
+library(faraway)
+data(prostate)
+lmod <- lm(lpsa ~ lcavol + age + lweight, prostate)
+bootsamps <- bootWild(formula='lpsa ~ lcavol + age + lweight', data=prostate,
+                      lmodObs=lmod, B = 1000, multiplier = 'Mammen2' )
+
 }
 \references{
 Davison, A.C. and Hinkley, D.V. (1997) Bootstrap Methods and Their Application. Cambridge University Press.

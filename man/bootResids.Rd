@@ -30,6 +30,14 @@ This function simulates the sampling distribution of simple linear regression co
 by first simulating the distribution of the errors (\eqn{\mathbf{\epsilon}}) by the
 empirical distribution function of the residuals (i.e. resampling residuals with replacement).
 }
+\examples{
+library(faraway)
+data(prostate)
+lmod <- lm(lpsa ~ lcavol + age + lweight, prostate)
+bootsamps <- bootResids(formula='lpsa ~ lcavol + age + lweight', data=prostate,
+                        lmodObs=lmod, B=1000)
+
+}
 \references{
 Davison, A.C. and Hinkley, D.V. (1997) Bootstrap Methods and Their Application. Cambridge University Press.
 }

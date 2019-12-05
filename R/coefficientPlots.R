@@ -16,6 +16,14 @@
 ##' six supported bootstrapping methods of size B x (k+1) where k is the number of predictors in the
 ##' model. Column \eqn{i} of the data frame will be a sample of size B from the sampling distribution of
 ##' \eqn{\beta_{i}}.
+##' @examples
+##' library(faraway)
+##' data(prostate)
+##' lmod <- lm(lpsa ~ lcavol + age + lweight, prostate)
+##' bootsamps <- bootstrapSamples(lmodObs=lmod, formula='lpsa ~ lcavol + age + lweight',
+##'                               data=prostate, B=1000)
+##' coefficientPlots(lmodObs=lmod, bootList=bootsamps)
+##'
 ##' @author Natalie DelRocco
 
 #' @export

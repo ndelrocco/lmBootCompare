@@ -22,6 +22,14 @@
 ##' \eqn{\mathbf{\beta}} using the bootstrapped estimate of the variance, and bootstrap percentile
 ##' intervals for \eqn{\mathbf{\beta}}. Summary statistics are calculated for each covariate and each
 ##' bootstrap method.
+##' @examples
+##' library(faraway)
+##' data(prostate)
+##' lmod <- lm(lpsa ~ lcavol + age + lweight, prostate)
+##' bootsamps <- bootstrapSamples(lmodObs=lmod, formula='lpsa ~ lcavol + age + lweight',
+##'                               data=prostate, B=1000)
+##' bootstrapConfInt(lmodObs=lmod, bootList=bootsamps, level=0.95)
+##'
 ##' @author Natalie DelRocco
 ##' @references Davison, A.C. and Hinkley, D.V. (1997) Bootstrap Methods and Their Application. Cambridge University Press.
 

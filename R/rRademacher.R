@@ -5,6 +5,9 @@
 ##' @title Random number generation for the Rademacher distribution
 ##' @param n A positive integer. The number of random deviates to generate.
 ##' @return n random realizations from the Rademacher distribution
+##' @examples
+##' rRademacher(1)
+##'
 ##' @author Natalie DelRocco
 
 #' @export

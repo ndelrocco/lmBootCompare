@@ -18,6 +18,10 @@ Generate random deviates from the Rademacher distribution (Description)
 \details{
 This function generates random numbers from the Rademacher distribution.
 }
+\examples{
+rRademacher(1)
+
+}
 \author{
 Natalie DelRocco
 }

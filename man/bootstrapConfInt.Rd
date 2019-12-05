@@ -29,6 +29,15 @@ with Rademacher Distribution, and Wild bootstrap with Standard Normal Distributi
 compared to the model based confidence interval. Model based, normal approximation, and bootstrap
 percentile intervals are considered.
 }
+\examples{
+library(faraway)
+data(prostate)
+lmod <- lm(lpsa ~ lcavol + age + lweight, prostate)
+bootsamps <- bootstrapSamples(lmodObs=lmod, formula='lpsa ~ lcavol + age + lweight',
+                              data=prostate, B=1000)
+bootstrapConfInt(lmodObs=lmod, bootList=bootsamps, level=0.95)
+
+}
 \references{
 Davison, A.C. and Hinkley, D.V. (1997) Bootstrap Methods and Their Application. Cambridge University Press.
 }

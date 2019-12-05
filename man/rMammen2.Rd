@@ -18,6 +18,10 @@ Generate a random deviate from Mammen's two-point distribution (Description)
 \details{
 This function generates random numbers from Mammen's two-point distribution:
 }
+\examples{
+rMammen2(1)
+
+}
 \references{
 Davison, A.C. and Hinkley, D.V. (1997) Bootstrap Methods and Their Application. Cambridge University Press.
 

@@ -1,0 +1,77 @@
+---
+title: "lmBootCompare"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lmBootCompare}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(lmBootCompare)
+```
+
+Linear regression is one of the most commonly used tools in the field of statistics. 
+<br><br>
+\deqn{\mathbf{y = X\boldsymbol{\beta} + \boldsymbol{\epsilon}}}
+<br><br>
+The popularity and versatility of linear models across many disciplines yields a set of unique challenges, one of which being that the theoretical assumptions which make a linear model reasonable may not be met. The sample size of the observed data should either be sufficiently large, or the error distribution should be reasonably normally distributed. Additionally, in the above model formulation, errors are assumed to be independent and identically distributed (i.e. uncorrelated with constant variance). If any of the assumptions listed above are violated, then we may not wish to trust inference based on the ordinary least squares or maximum likelihood estimates of the variance of \eqn{\boldsymbol{\beta}}.
+<br><br>
+Let's take a look at an example. The trans-Alaska Pipeline System moves crude oil from the south to the northern tip of Alaska, and is one of the largest pipeline systems in the world. The National Institutes of Standards and Technology (NIST) collected field measurements of defects in the Alaska pipeline, then remeasured the same defects in the laboratory. Suppose we would like to use the Pipeline data in R to investigate whether field measurements can significantly predict more accurate laboratory measurements. We will ignore the potential batch effect for now.
+```{r}
+library(faraway)
+data("pipeline")
+head(pipeline)
+pipeline <- pipeline[,-3]
+```
+<br><br>
+To determine whether field measurements can significantly predict more accurate laboratory measurements, we fit a simple linear model. According to the summary output, we can be confident that there is a positive association between field measurements and laboratory measurements.
+```{r}
+lMod <- lm(Lab~Field,data=pipeline)
+sumary(lMod)
+```
+<br><br>
+We did not, however, check the assumptions which the linear model uses to conduct the above inference. Particularly, based on the plot of residuals vs. fitted values, we cannot be confident that the constant variance of residuals assumption is met (the normality assumption doesn't look great either, though we likely have enough observations to outweigh this).
+```{r}
+plot(lMod, c(1,2))
+```
+<br><br>
+What can we do? How can we be reasonably confident that our inference about \eqn{\boldsymbol{\beta}} is trustworthy? There are many options, including weighted least squares, generalized least squares, and transformation (to name a few). However, these require some familiarity of working with data, and for weighted and generalized least squares a slightly more advanced knowledge of statistics is implied. 
+<br><br>
+The bootstrap allows us to study the variance of any general "plug-in" estimate, including regression coefficients. Instead of searching for a model that is robust to our violated assumptions, we can simply simulate the distribution of \eqn{\boldsymbol{\hat{\beta}}}, the estimate of \eqn{\boldsymbol{\beta}}. For linear regression models, there are three main ways to generate the bootstrapped sampling distribution of a regression coefficient:
+-Empirical bootstrap (resampling cases)
+-Model-based bootstrap (resampling residuals)
+-Wild Bootstrap
+<br><br>
+We won't get too deep into the specifics here, as documentation is extensive and cited in the description. The empirical bootstrap and Wild bootstrap are both appropriate under non-constant variance. Empirical bootstrap ignores the residuals entirely, and simulated the joint distribution of \eqn{(\mathbf(X),Y)}. Wild bootstrap performs local variance estimation by using an auxiliary multiplier on the model residuals. There are four commonly used multipliers: Mammen's two-point distribution, Mammen's continuous distribution, the Rademacher distribution, and the Standard Normal distribution. However, if the model fit is decent and there is no evidence of non-constant variance, it is most efficient to used model-based resampling. As there are many potential approaches and it may not be immediately clear which is desired, it might be of interest to the user to conduct multiple approaches and compare the results. 
+<br><br>
+The primary purpose of this package is to compare the bootstrapped sampling distributions of linear regression coefficients obtained using the six different methods. There are four main functions in this package to facilitate this.
+<br><br>
+First we will generate bootsrap samples from the sampling distribution of \eqn{\hat{\beta_{Field}}}. We generate B=1000 bootstrap replicates of \eqn{\hat{\beta_{Field}}} for each of the six bootstrapping methods.
+```{r}
+bootsamps <- bootstrapSamples( lmodObs = lMod, formula = "Lab ~ Field", data = pipeline, B = 1000 )
+```
+<br><br>
+Now we will compare the sampling distributions of \eqn{\hat{\beta_{Field}}} generated by each of the six bootstrapping methods. We will start off by comparing the summary statistics for the sampling distributions accross methods:
+```{r}
+bootstrapSummary(bootsamps, lMod)
+```
+<br> We can see that the summary statistics describing the sampling distributions generated by the residual bootstrap are distinct from the empirical and wild (all multipliers). This is because the residual bootstrap treats the residuals as arising from a common distribution, whereas empirical and wild allow for heteroskedasticity.
+<br><br>
+We can also visualize the differences in sampling distributions:
+```{r}
+coefficientPlots(lMod, bootsamps)
+```
+<br><br>
+One of the most useful aspects of bootstrapping regression coefficients is the availability of non-parametric confidence intervals. This allows us to check whether our conclusions from the initial inference about \eqn{\beta_{Field}} is trustworthy.
+```{r}
+bootstrapConfInt(lMod, bootsamps, 0.95)
+```
+<br>As none of the bootstrapped confidence intervals for \eqn{\beta_{Field}} include zero, we can be more confident that the association between field measurements and laboratory measurements is present despite our violated linear model assumptions.

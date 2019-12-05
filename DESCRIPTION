@@ -1,0 +1,29 @@
+Package: lmBootCompare
+Title: Compares Six Methods of Bootstrapping Linear Model Coefficients
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Natalie",
+           family = "DelRocco",
+           role = c("aut", "cre"),
+           email = "ndelrocco95@ufl.edu",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: The primary purpose of this package is to compare the bootstrapped sampling distributions
+     of linear regression coefficients obtained using six different methods. Case resampling, 
+     residual resampling, Wild bootstrap with Mammen's Two-Point Distribution, Wild bootstrap 
+     with Mammen's Continuous Distribution, Wild boostrap with Rademacher Distribution, and Wild
+     bootstrap with Standard Normal Distribution are supported. There are four main functions in this 
+     package to facilitate this. bootstrapSamples(), bootstrapSummary(), bootstrapConfint(), and 
+     coefficientPlots(). These functions generate samples, calculate summary statistics, calculate 
+     confidence intervals for parameters, and visualize the sampling distributions (respectively). 
+     This allows the user to compare the results of different sampling approaches simultaneously 
+     with ease.
+Depends: R (>= 3.6.0), stats
+Imports: dplyr, 
+         tidyr,
+         graphics,
+         ggplot2
+Suggests: faraway
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
